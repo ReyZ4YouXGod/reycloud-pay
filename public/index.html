@@ -7,22 +7,108 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: #0a0a0a; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .payment-box { background: #111; width: 100%; max-width: 400px; border-radius: 20px; border: 1px solid #333; padding: 30px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.7); }
-        h2 { color: #00ffcc; font-family: 'Space Mono', monospace; margin-bottom: 25px; letter-spacing: 2px; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #0a0a0a; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 20px; 
+        }
+        .payment-box { 
+            background: #111; 
+            width: 100%; 
+            max-width: 400px; 
+            border-radius: 20px; 
+            border: 1px solid #333; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7); 
+        }
+        h2 { 
+            color: #00ffcc; 
+            font-family: 'Space Mono', monospace; 
+            margin-bottom: 25px; 
+            letter-spacing: 2px; 
+            text-transform: uppercase;
+        }
         .input-box { text-align: left; margin-bottom: 15px; }
-        label { font-size: 0.7rem; color: #666; margin-left: 5px; text-transform: uppercase; }
-        input { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 10px; outline: none; margin-top: 5px; transition: 0.3s; }
+        label { 
+            font-size: 0.7rem; 
+            color: #666; 
+            margin-left: 5px; 
+            text-transform: uppercase; 
+            font-weight: 600;
+        }
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            background: #1a1a1a; 
+            border: 1px solid #333; 
+            color: white; 
+            border-radius: 10px; 
+            outline: none; 
+            margin-top: 5px; 
+            transition: 0.3s; 
+            font-family: 'Space Mono', monospace;
+        }
         input:focus { border-color: #00ffcc; }
-        button { width: 100%; padding: 14px; background: #00ffcc; color: #000; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; font-size: 1rem; }
+        input[readonly] { color: #888; cursor: not-allowed; }
+
+        button { 
+            width: 100%; 
+            padding: 14px; 
+            background: #00ffcc; 
+            color: #000; 
+            border: none; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            margin-top: 10px; 
+            font-size: 1rem; 
+            text-transform: uppercase;
+        }
         button:hover { background: #00cca3; transform: translateY(-2px); }
-        .btn-cancel { background: transparent; border: 1px solid #ff4444; color: #ff4444; font-size: 0.8rem; margin-top: 15px; }
+        button:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+        .btn-cancel { 
+            background: transparent; 
+            border: 1px solid #ff4444; 
+            color: #ff4444; 
+            font-size: 0.8rem; 
+            margin-top: 15px; 
+        }
         .btn-cancel:hover { background: #ff4444; color: #000; }
-        #status-info { margin-top: 20px; font-size: 0.85rem; color: #00ffcc; font-family: 'Space Mono', monospace; }
-        #qris-result { margin-top: 25px; display: none; animation: fadeIn 0.5s ease; }
-        .qris-frame { background: white; padding: 15px; border-radius: 15px; display: inline-block; margin-bottom: 10px; }
-        #qris-image { width: 200px; height: 200px; display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        #status-info { 
+            margin-top: 20px; 
+            font-size: 0.85rem; 
+            color: #00ffcc; 
+            font-family: 'Space Mono', monospace; 
+            min-height: 20px;
+        }
+
+        #qris-result { 
+            margin-top: 25px; 
+            display: none; 
+            animation: fadeIn 0.5s ease; 
+        }
+        .qris-frame { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 15px; 
+            display: inline-block; 
+            margin-bottom: 10px; 
+        }
+        #qris-image { width: 220px; height: 220px; display: block; }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: scale(0.9); } 
+            to { opacity: 1; transform: scale(1); } 
+        }
     </style>
 </head>
 <body>
@@ -36,19 +122,19 @@
         </div>
 
         <div class="input-box">
-            <label>Nominal Topup</label>
-            <input type="number" id="amount" placeholder="Min. 1000">
+            <label>Nominal Topup (Min. 1000)</label>
+            <input type="number" id="amount" placeholder="Masukkan angka saja">
         </div>
         
         <button id="btn-generate" onclick="createTransaction()">GENERATE QRIS</button>
         
-        <div id="status-info">Ready to process...</div>
+        <div id="status-info">Sistem Siap...</div>
 
         <div id="qris-result">
             <div class="qris-frame">
                 <img id="qris-image" src="" alt="QRIS">
             </div>
-            <p style="color: #888; font-size: 0.75rem; margin-bottom: 15px;">Silakan bayar melalui aplikasi bank/e-wallet</p>
+            <p style="color: #888; font-size: 0.75rem; margin-bottom: 15px;">Scan QRIS di atas untuk membayar</p>
             <button class="btn-cancel" onclick="cancelTransaction()">BATALKAN TRANSAKSI</button>
         </div>
     </div>
@@ -56,85 +142,114 @@
     <script>
         let checkInterval;
 
+        // Generate Order ID secara acak
         function generateID() {
             const id = "RC-" + Math.random().toString(36).substring(2, 8).toUpperCase();
             document.getElementById('order_id').value = id;
         }
         window.onload = generateID;
 
+        // Fungsi Cek Status Pembayaran (Polling)
         async function checkStatus(orderId, amount) {
             try {
                 const response = await fetch(`/api/check-status?order_id=${orderId}&amount=${amount}`);
                 const res = await response.json();
                 
-                // Cek status dengan toLowerCase agar aman dari perbedaan huruf besar/kecil
+                // Ambil status & samakan ke huruf kecil
                 const status = res.status ? res.status.toLowerCase() : "";
 
                 if (status === "completed") {
                     document.getElementById('status-info').innerText = "SUCCESS: PEMBAYARAN MASUK!";
                     document.getElementById('status-info').style.color = "#00ffcc";
                     document.getElementById('qris-result').style.display = "none";
+                    document.getElementById('btn-generate').disabled = false;
+                    
                     clearInterval(checkInterval);
-                    alert("Pembayaran Berhasil! Terima kasih.");
+                    alert("Topup Berhasil! Terima kasih sudah berlangganan di REYZCLOUD.");
                     generateID();
                 } else if (status === "pending") {
-                    document.getElementById('status-info').innerText = "Menunggu Pembayaran (Pending)...";
+                    document.getElementById('status-info').innerText = "Menunggu Pembayaran (Status: Pending)";
                     document.getElementById('status-info').style.color = "#ffcc00";
                 } else if (status === "expired" || status === "canceled") {
                     document.getElementById('status-info').innerText = "Transaksi Gagal/Expired.";
                     document.getElementById('status-info').style.color = "#ff4444";
                     document.getElementById('qris-result').style.display = "none";
+                    document.getElementById('btn-generate').disabled = false;
                     clearInterval(checkInterval);
                 }
             } catch (e) { console.error("Error check:", e); }
         }
 
+        // Fungsi Membuat Transaksi QRIS
         async function createTransaction() {
             const orderId = document.getElementById('order_id').value;
             const amount = document.getElementById('amount').value;
             const statusInfo = document.getElementById('status-info');
             const qrisResult = document.getElementById('qris-result');
+            const btnGenerate = document.getElementById('btn-generate');
 
-            if (!amount || amount < 1000) return alert("Minimal Rp 1.000");
+            if (!amount || amount < 1000) return alert("Minimal nominal adalah Rp 1.000");
 
-            statusInfo.innerText = "Processing API...";
+            statusInfo.innerText = "Processing API Pakasir...";
+            statusInfo.style.color = "#00ffcc";
+            btnGenerate.disabled = true;
+
             try {
                 const response = await fetch('/api/create-qris', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ order_id: orderId, amount: amount })
                 });
+
                 const res = await response.json();
-                const qrStr = res.qr_string || (res.data && res.data.qr_string);
+                console.log("Full Respon:", res);
+
+                // Auto-detect field QR String dari Pakasir
+                const qrStr = res.qr_string || 
+                              (res.data && res.data.qr_string) || 
+                              (res.data && res.data.payment ? res.data.payment.payment_number : null) ||
+                              res.qr_content;
 
                 if (qrStr) {
-                    statusInfo.innerText = "Menunggu Pembayaran...";
+                    statusInfo.innerText = "QRIS Berhasil Dibuat!";
                     document.getElementById('qris-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrStr)}`;
                     qrisResult.style.display = "block";
                     
                     if (checkInterval) clearInterval(checkInterval);
                     checkInterval = setInterval(() => checkStatus(orderId, amount), 5000);
                 } else {
-                    statusInfo.innerText = "Gagal: " + (res.message || "Gagal Generate QR");
+                    const msg = res.message || res.msg || "Gagal Generate (Cek API Key/Slug)";
+                    statusInfo.innerText = "Gagal: " + msg;
+                    statusInfo.style.color = "#ff4444";
+                    btnGenerate.disabled = false;
                 }
-            } catch (e) { statusInfo.innerText = "Error Koneksi!"; }
+            } catch (e) { 
+                statusInfo.innerText = "Error Koneksi!"; 
+                statusInfo.style.color = "#ff4444";
+                btnGenerate.disabled = false;
+            }
         }
 
+        // Fungsi Batalkan Transaksi
         async function cancelTransaction() {
-            if (!confirm("Batalkan transaksi ini?")) return;
+            if (!confirm("Yakin ingin membatalkan transaksi ini?")) return;
             const orderId = document.getElementById('order_id').value;
             const amount = document.getElementById('amount').value;
+            
             try {
                 await fetch('/api/cancel-transaction', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ order_id: orderId, amount: amount })
                 });
+                
                 clearInterval(checkInterval);
                 document.getElementById('qris-result').style.display = "none";
-                document.getElementById('status-info').innerText = "Transaksi Dibatalkan.";
+                document.getElementById('status-info').innerText = "Transaksi Telah Dibatalkan.";
+                document.getElementById('status-info').style.color = "#ff4444";
+                document.getElementById('btn-generate').disabled = false;
                 generateID();
-            } catch (e) { alert("Gagal membatalkan"); }
+            } catch (e) { alert("Gagal membatalkan transaksi."); }
         }
     </script>
 </body>
