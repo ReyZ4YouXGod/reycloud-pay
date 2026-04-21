@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/create-qris", "destination": "/api/create-qris.js" },
+    { "source": "/api/check-status", "destination": "/api/check-status.js" },
+    { "source": "/api/cancel-transaction", "destination": "/api/cancel-transaction.js" },
+    { "source": "/(.*)", "destination": "/public/$1" }
+  ]
+}
